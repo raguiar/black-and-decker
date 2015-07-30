@@ -1,8 +1,22 @@
-﻿function pad(n, width, z) {
-    z = z || '0';
-    n = n + '';
-    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+﻿
+function doTheWork() {
+    
+    // change button look to say it has started working   
+    document.getElementById("botao").classList.remove("btn-default");
+    document.getElementById("botao").classList.add("btn-info");
+    document.getElementById("botao").value = ".. Em execução ..";
+    
+    // read config.xlsx
+    configure();
+    
+    // process data according to configuration
+    process(getData());
+    
+    // inform the user that work has finished
+    document.getElementById("botao").style.visibility = "hidden";
+    document.getElementById("mensagem").style.visibility = "visible";
 }
+
 
 
 
@@ -13,15 +27,9 @@ function configure() {
     PATH = require('path');
     PROC = require('process');
     
-    //alert(PATH.dirname(PROC.execPath));
-    
     var cfgFileName = PATH.join(PATH.dirname(PROC.execPath), 'config.xlsx');
-
-    //alert(FS.existsSync(cfgFileName));
     
     workbook = XLSX.readFile(cfgFileName);
-    
-    //alert(workbook);
     
     sheets = workbook.SheetNames;
     
@@ -78,10 +86,8 @@ function getData() {
                             dataRow.push(fich.Sheets[fich.SheetNames[0]][colDef.cellAddress].v);
                     }
                 );
-                
                 data.push(dataRow);
             }
-            
         }
     )
     return data;
@@ -91,7 +97,6 @@ function getData() {
 function process(data) {
     
     var ws_name = "SheetJS";
-    
     
     // Inicializar workbook
     var wb = {}
@@ -139,111 +144,32 @@ function process(data) {
     var suffix = '' + dtNow.getFullYear() + '' + pad(dtNow.getUTCMonth(), 2) + '' + pad(dtNow.getDate(), 2) + '_' + pad(dtNow.getHours(), 2) + pad(dtNow.getMinutes(), 2) + pad(dtNow.getSeconds(), 2);
     
     XLSX.writeFile(wb, PATH.join(outputFolder, outputFilename + suffix + '.xlsx'));
-
-
 }
 
 
 
 
-
-
-/*
-
-var http = require('http');
-var port = process.env.port || 1337;
-http.createServer(function (req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello World\n');
-}).listen(port);
- * 
- * */
-
-
-function doTheWork() {
-    
-    // jQuery
-    //$.getScript('lada.js', function () {
-    
-    // Create a new instance of ladda for the specified button
-    //l = Ladda.create(document.querySelector('#botao'));
-    
-    //alert(l);
-    //l.start();
-    
-    
-    //var $btn = $(this).button('loading')
-    
-    //document.querySelector('#botao')
-    // business logic...
-    //$btn.button('reset')
-    
-    
-    document.getElementById("botao").classList.remove("btn-default");
-    document.getElementById("botao").classList.add("btn-info");
-    
-    document.getElementById("botao").value = ".. Em execução ..";
-
-    configure();
-    
-    process(getData());
-    
-    document.getElementById("botao").style.visibility = "hidden";
-    
-    document.getElementById("mensagem").style.visibility = "visible";
-    
-
-    /*$ = require('jQuery');
-    
-    alert($("#botao"));
-
-    $("#botao").css("visibility:hidden");
-    $("#mensagem").css("visibility:visible");
-    */
-    //l.stop();
-    //});
+function pad(n, width, z) {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function callback(err, data) {
-    alert(err);
-    alert(data);
-    var body = document.getElementsByTagName('body')[0];
-    body.style.backgroundImage = data;
-}
 
 
 
 function setPic() {
+    // Atempts at getting NASA Picture of the Day (for App background): couldn't make it work, the response seems to be empty...
     
-//    alert('SetPic');
-
-
-
-    
-    /*
+    /* WITH NAJAX
     NAJAX = require('najax');
     
     var url = "https://api.nasa.gov/planetary/apod?concept_tags=True&api_key=hnFbMEfBoKWSqZTDdrMc9i6j9yQUA7N6climameT";
     NAJAX(url, function (html) { alert('oi' ); });
-    
-    alert('Feito');
-    
+    */
     
     
+    /* WITH JQUERY    
     alert(url);
     
     $.ajax({
@@ -253,9 +179,6 @@ function setPic() {
     });
     
     function handleResult(result) {
-        
-        alert(result.url);
-    
     if (result.media_type == "video") {
         $("#apod_img_id").css("display", "none");
         $("#apod_vid_id").attr("src", result.url);
@@ -269,8 +192,17 @@ function setPic() {
     $("#apod_explaination").text(result.explanation);
     $("#apod_title").text(result.title);
      * */
+
 }
 
 
-
+/* 
+ * ALSO TRIED WITH APODJS
+function callback(err, data) {
+    alert(err);
+    alert(data);
+    var body = document.getElementsByTagName('body')[0];
+    body.style.backgroundImage = data;
+}
+*/
 
