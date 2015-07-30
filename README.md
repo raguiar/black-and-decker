@@ -4,9 +4,10 @@ Utilities
 Node.Js app that reads several excel files and extracts specified cell contents into a summary excel file.
 
 It was created using Visual Studio 2012, hence the .sln and .nsproj files
+It uses the XLSX-JS library to handle the Excel files
 
 To create a Desktop Application using Node-Webkit:
-1. Zip all the content of Excelister 
+1. Zip all the content of Excelister
 2. Change the extension of the '.zip' to '.nw'
 3. On Windows, having Node-Webkit installed, run the following:
       copy /b nw.exe+<path to renamed .nw file>\<name of .nw file> <desired exe filename.exe>
