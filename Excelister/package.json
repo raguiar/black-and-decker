@@ -1,0 +1,22 @@
+{
+  "name": "Excriber",
+  "version": "0.0.0",
+  "description": "Excriber",
+  "main": "app.html",
+  "author": {
+    "name": "XPTS929",
+    "email": ""
+  },
+  "window": {
+    "frame": false,
+    "toolbar": false
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "fs": "0.0.2",
+    "jquery": "^2.1.4",
+    "path": "^0.11.14",
+    "process": "^0.11.1",
+    "xlsx": "^0.8.0"
+  }
+}
